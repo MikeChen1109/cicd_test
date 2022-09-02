@@ -1,11 +1,7 @@
-name: Build APK & iOS
+name: Continuous Integration
 
 on: 
   pull_request:
-  push:
-    branches:
-      - master
-      - develop
 
 jobs:
   build:
@@ -22,7 +18,4 @@ jobs:
           channel: 'stable'
           architecture: x64
       - run: flutter pub get
-      - run: flutter test
       - run: flutter format --set-exit-if-changed .
-      - run: flutter build apk
-      - run: flutter build ios --release --no-codesign
