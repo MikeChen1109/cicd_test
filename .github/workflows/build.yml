@@ -6,7 +6,7 @@ on:
 env:
   FLUTTER_CHANNEL: 'stable' # 'stable', 'beta', or 'master', default to: 'stable'
   FLUTTER_VERSION: '2.10.5'
-  XCODE_VERSION: '13.4'
+  XCODE_VERSION: 'latest-stable'
   PATH_TO_AAB: 'build/app/outputs/bundle/release/app-release.aab'
   ANDROID_PACKAGE_NAME: 'com.example.tang.cicdtest'
   PATH_TO_IPA: 'build/ios/ipa/flutter_github_actions_basics.ipa'
@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Set up Xcode ${{ env.XCODE_VERSION }}
+      - name: Set up Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: ${{ env.XCODE_VERSION }}
