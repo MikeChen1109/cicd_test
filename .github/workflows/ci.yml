@@ -8,7 +8,7 @@ on:
       - develop
 
 jobs:
-  build:
+  Explore-GitHub-Actions:
   name: "setup flutter"
     runs-on: macos-latest
     steps:
