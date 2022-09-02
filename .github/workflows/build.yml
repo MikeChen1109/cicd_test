@@ -9,7 +9,7 @@ env:
   XCODE_VERSION: 'latest-stable'
   PATH_TO_AAB: 'build/app/outputs/bundle/release/app-release.aab'
   ANDROID_PACKAGE_NAME: 'com.example.tang.cicdtest'
-  PATH_TO_IPA: 'build/ios/ipa/flutter_github_actions_basics.ipa'
+  PATH_TO_IPA: 'build/ios/ipa/*.ipa'
 
 jobs:
   build_with_signing:
@@ -18,10 +18,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-      - name: Set up Xcode
-        uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: ${{ env.XCODE_VERSION }}
       - name: Install the Apple certificate and provisioning profile
         env:
           FS_P12_FILE: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
@@ -64,7 +60,7 @@ jobs:
           # Otherwise the build will freeze at signing the frameworks if the keychain is locked
           echo "Increasing keychain auto lock timeout"
           security set-keychain-settings -lut 1800 ~/Library/Keychains/build.keychain
-          flutter build ipa --release
+          flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist
           echo "Locking keychain"
           security lock-keychain ~/Library/Keychains/build.keychain
       - name: Upload IPA artifact
