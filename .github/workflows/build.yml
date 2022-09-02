@@ -12,7 +12,6 @@ env:
   PATH_TO_IPA: 'build/ios/ipa/flutter_github_actions_basics.ipa'
 
 jobs:
-  name: export ipa
   build_with_signing:
     runs-on: macos-latest
     timeout-minutes: 30
