@@ -1,4 +1,4 @@
-name: CI Test
+name: Build APK & iOS
 
 on: 
   pull_request:
@@ -7,7 +7,6 @@ on:
       - master
       - develop
 
-name: "Build"
 jobs:
   build:
   name: "setup flutter"
