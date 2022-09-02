@@ -8,15 +8,8 @@
 	<true/>
 	<key>method</key>
 	<string>app-store</string>
-	<key>provisioningProfiles</key>
-	<dict>
-		<key>com.example.tang.cicdtest</key>
-		<string>cicd_profile_prod</string>
-	</dict>
-	<key>signingCertificate</key>
-	<string>5D9FFC87424AD3E88D6302C6D1CC477927F96E8A</string>
 	<key>signingStyle</key>
-	<string>manual</string>
+	<string>automatic</string>
 	<key>stripSwiftSymbols</key>
 	<true/>
 	<key>teamID</key>
