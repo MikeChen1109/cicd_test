@@ -11,7 +11,7 @@ env:
   ANDROID_PACKAGE_NAME: 'com.example.tang.cicdtest'
   PATH_TO_IPA: 'build/ios/ipa/flutter_github_actions_basics.ipa'
 
-ios:
+jobs:
   name: export ipa
   build_with_signing:
     runs-on: macos-latest
