@@ -53,7 +53,7 @@ jobs:
           architecture: x64
       - run: flutter pub get
       - name: Building IPA
-        run: flutter build ipa --release --export-options-plist=ios/Runner/ExportOptions.plist
+        run: flutter build ipa --release -t lib/main_dev.dart --export-options-plist=ios/Runner/ExportOptions.plist
           
       # Collect the file and upload as artifact         
       - name: collect ipa artifacts
