@@ -93,7 +93,7 @@ jobs:
           cache: true
           architecture: x64  
       - run: flutter pub get
-      - run: flutter build apk --release --flavor Prod -t lib/main_prod.dart
+      - run: flutter build apk --release -t lib/main_prod.dart
       - uses: actions/upload-artifact@v3
         with:
           name: release-prod-apk
