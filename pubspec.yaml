@@ -10,6 +10,7 @@ environment:
   sdk: ">=2.16.2 <3.0.0"
 
 dependencies:
+  flutter_flavor: 
   youtube_player_flutter: 8.0.0
   pod_player: ^0.0.5
   firebase_analytics: 9.3.3

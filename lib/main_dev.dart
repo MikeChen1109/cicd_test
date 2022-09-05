@@ -1,6 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_flavor/flutter_flavor.dart';
 
 void main() {
+  FlavorConfig(
+    name: "Dev",
+    color: Colors.red,
+    variables: {
+      "counter": 0,
+      "baseUrl": "https://www.example1.com",
+    },
+  );
   runApp(const MyApp());
 }
 
@@ -49,8 +58,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  Color _color = FlavorConfig.instance.color;
 
   void _incrementCounter() {
+    print(_color);
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
@@ -106,6 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: _color,
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
