@@ -1,4 +1,4 @@
-name: Build APK & iOS
+name: Build APK & iOS (Prod)
 
 on: 
   workflow_dispatch:
@@ -53,7 +53,7 @@ jobs:
           architecture: x64
       - run: flutter pub get
       - name: Build Flutter
-        run: flutter build ios --release --no-codesign --split-debug-info=build/app/outputs/symbols
+        run: flutter build ios --flavor Prod --release -t lib/main_prod.dart --no-codesign --split-debug-info=build/app/outputs/symbols
       - name: Build resolve Swift dependencies
         run: xcodebuild -resolvePackageDependencies -workspace ios/Runner.xcworkspace -scheme Runner -configuration Release 
       - name: Build xArchive
@@ -64,7 +64,7 @@ jobs:
       - name: Publish iOS Artefacts
         uses: actions/upload-artifact@v3
         with:
-          name: release-ios
+          name: release-prod-ios
           path: build-output/ios
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
@@ -84,8 +84,8 @@ jobs:
           cache: true
           architecture: x64  
       - run: flutter pub get
-      - run: flutter build apk
+      - run: flutter build apk --release --flavor Prod -t lib/main_prod.dart
       - uses: actions/upload-artifact@v3
         with:
-          name: release-apk
+          name: release-prod-apk
           path: build/app/outputs/apk/release/app-release.apk

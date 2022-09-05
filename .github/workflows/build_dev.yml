@@ -1,0 +1,91 @@
+name: Build APK & iOS (Dev)
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  build_ipa:
+    runs-on: macos-latest
+    # timeout-minutes: 30
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Install the Apple certificate and provisioning profile
+        env:
+          RELEASE_CERTIFICATE_BASE64: ${{ secrets.RELEASE_CERTIFICATE_BASE64 }}
+          BUILD_CERTIFICATE_BASE64: ${{ secrets.BUILD_CERTIFICATE_BASE64 }}
+          P12_PASSWORD: ${{ secrets.P12_PASSWORD }}
+          KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+        run: |
+          # create variables
+          CERTIFICATE_PATH=$RUNNER_TEMP/build_certificate.p12
+          RELEASE_CERTIFICATE_PATH=$RUNNER_TEMP/release_certificate.p12
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          echo -n "$BUILD_CERTIFICATE_BASE64" | base64 --decode --output $CERTIFICATE_PATH
+          echo -n "$RELEASE_CERTIFICATE_BASE64" | base64 --decode --output $RELEASE_CERTIFICATE_PATH
+          # create temporary keychain
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          # import certificate to keychain
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security import $RELEASE_CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security list-keychain -d user -s $KEYCHAIN_PATH
+      - name: Install the provisioning profile
+        env:
+          PROVISIONING_CERTIFICATE_BASE64: ${{ secrets.BUILD_PROVISION_PROFILE_BASE64 }}
+          PP_FILE_RELEASE_BASE63: ${{ secrets.RELEASE_PROVISION_PROFILE_BASE64 }}
+        run: |
+          PP_PATH=$RUNNER_TEMP/build_pp.mobileprovision
+          echo -n "$PROVISIONING_CERTIFICATE_BASE64" | base64 --decode --output $PP_PATH
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+          RELEASE_PP_PATH=$RUNNER_TEMP/release_pp.mobileprovision
+          echo -n "$PP_FILE_RELEASE_BASE63" | base64 --decode --output $RELEASE_PP_PATH
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $RELEASE_PP_PATH ~/Library/MobileDevice/Provisioning\ Profiles
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '2.10.5'
+          channel: 'stable'
+          cache: true
+          architecture: x64
+      - run: flutter pub get
+      - name: Build Flutter
+        run: flutter build ios --flavor Dev --release -t lib/main_dev.dart --no-codesign --split-debug-info=build/app/outputs/symbols
+      - name: Build resolve Swift dependencies
+        run: xcodebuild -resolvePackageDependencies -workspace ios/Runner.xcworkspace -scheme Runner -configuration Release 
+      - name: Build xArchive
+        run: |
+          xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Release DEVELOPMENT_TEAM=Q8K3DDFT5E -sdk 'iphoneos' -destination 'generic/platform=iOS' -archivePath build-output/app.xcarchive PROVISIONING_PROFILE=pp_cicd_release clean archive CODE_SIGN_IDENTITY="Apple Development: YiTang Chen"   
+      - name: Export ipa
+        run: xcodebuild -exportArchive -archivePath build-output/app.xcarchive -exportPath build-output/ios -exportOptionsPlist ios/Runner/ExportOptions.plist    
+      - name: Publish iOS Artefacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-dev-ios
+          path: build-output/ios
+      - name: Clean up keychain and provisioning profile
+        if: ${{ always() }}
+        run: |
+          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
+          rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
+  build_apk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '2.10.5'
+          channel: 'stable'
+          cache: true
+          architecture: x64  
+      - run: flutter pub get
+      - run: flutter build apk --release --flavor Dev -t lib/main_dev.dart
+      - uses: actions/upload-artifact@v3
+        with:
+          name: release-dev-apk
+          path: build/app/outputs/apk/release/app-release.apk
