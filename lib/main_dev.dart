@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'CI/CD Demo',
+      title: 'CI/CD Demo da da da',
       theme: ThemeData(
         // This is the theme of your application.
         //
