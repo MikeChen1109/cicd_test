@@ -1,4 +1,4 @@
-name: Build APK & iOS (Dev)
+name: Deploy to Testflight
 
 on: 
   workflow_dispatch:
