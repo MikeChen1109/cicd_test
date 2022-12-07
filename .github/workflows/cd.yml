@@ -55,19 +55,19 @@ jobs:
       - name: Building IPA
         run: flutter build ipa --release -t lib/main_dev.dart --export-options-plist=ios/Runner/ExportOptions.plist
       # Collect the file and upload as artifact   
-      # - name: 'Upload app to TestFlight'
-      #   uses: apple-actions/upload-testflight-build@v1
-      #   with: 
-      #     app-path: '~/build/ios/ipa/*.ipa' 
-      #     issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
-      #     api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
-      #     api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}      
-      - name: collect ipa artifacts
-        uses: actions/upload-artifact@v3
-        with:
-         name: release-ipa
-         # Path to the release files
-         path: build/ios/ipa/*.ipa
+      - name: 'Upload app to TestFlight'
+        uses: apple-actions/upload-testflight-build@v1
+        with: 
+          app-path: '/Users/runner/work/cicd_test/cicd_test/build/ios/ipa/cicd_test.ipa' 
+          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
+          api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
+          api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}      
+      # - name: collect ipa artifacts
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #    name: release-ipa
+      #    # Path to the release files
+      #    path: build/ios/ipa/*.ipa
       - name: Clean up keychain and provisioning profile
         if: ${{ always() }}
         run: |
