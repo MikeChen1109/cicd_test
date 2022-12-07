@@ -13,3 +13,4 @@ jobs:
         env:
           MERGE_REQUIRED_APPROVALS: "1"
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_DELETE_BRANCH: true
