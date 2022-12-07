@@ -1,12 +1,10 @@
 name: automerge
 on:
-  check_suite:
-    types:
-      - completed
   pull_request_review:
     types: 
       - submitted
-  status: {}
+    workflow_run:
+      - completed
 jobs:
   automerge:
     runs-on: ubuntu-latest
