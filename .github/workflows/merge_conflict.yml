@@ -1,9 +1,7 @@
 name: Merge Conflicts
 
 on:
-  push:
-    branches:
-      - develop
+  pull_request:
 jobs:
   triage:
     runs-on: ubuntu-latest
