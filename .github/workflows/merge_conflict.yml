@@ -1,6 +1,7 @@
 name: Merge Conflicts
 
 on:
+  push:
   pull_request:
 jobs:
   triage:
