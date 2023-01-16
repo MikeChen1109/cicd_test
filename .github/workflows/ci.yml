@@ -21,8 +21,8 @@ jobs:
         env:
           VERSION: ${{ env.MY_DATE }}
         run: echo $VERSION
-      - run: | 
-        sed -i '' 's/version:.*/version: 1.2.3+1/g' pubspec.yaml 
+      # - run: | 
+      #   sed -i '' 's/version:.*/version: 1.2.3+1/g' pubspec.yaml 
       # - run: | 
       #   sed -i '' 's/version:.*/version: '"$VERSION"'/g' pubspec.yaml 
       # - name: Set current date as env variable
