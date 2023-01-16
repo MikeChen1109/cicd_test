@@ -30,6 +30,6 @@ jobs:
       #   run: echo "NOW=$(date "+%y.%m.%d+%H%M%S")" >> $GITHUB_ENV
       # - run: flutter pub get
       # - run: flutter format --set-exit-if-changed .
-      # - uses: stefanzweifel/git-auto-commit-action@v4
-      #   with:
-      #     commit_message: Automated Change
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Automated Change
