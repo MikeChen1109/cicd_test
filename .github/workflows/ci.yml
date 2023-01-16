@@ -20,7 +20,8 @@ jobs:
       - name: Test with environment variables
         env:
           VERSION: ${{ env.MY_DATE }}
-        run: echo $VERSION
+        run: | 
+        sed -i '' 's/version:.*/version: '"$VERSION"'/g' pubspec.yaml 
       # - run: | 
       #   sed -i '' 's/version:.*/version: '"$VERSION"'/g' pubspec.yaml 
       # - name: Set current date as env variable
