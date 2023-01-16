@@ -18,13 +18,12 @@ jobs:
         id: date
         run: echo "MY_DATE=$(date "+%y.%m.%d+%H%M%S")" >> $GITHUB_ENV
       - name: Test with environment variables
+      - run: sed -i '' 's/version:.*/version: '"$VERSION"'/g' pubspec.yaml 
         run: echo $VERSION
         env:
           VERSION: ${{ env.MY_DATE }}
       # - name: Set current date as env variable
       #   run: echo "NOW=$(date "+%y.%m.%d+%H%M%S")" >> $GITHUB_ENV
-      # - run: | 
-      #   sed -i '' 's/version:.*/version: '"$NOW"'/g' pubspec.yaml 
       # - run: flutter pub get
       # - run: flutter format --set-exit-if-changed .
       # - uses: stefanzweifel/git-auto-commit-action@v4
