@@ -7,7 +7,7 @@ on:
   #     - develop
 jobs:
   triage:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: mschilde/auto-label-merge-conflicts@master
         with:
