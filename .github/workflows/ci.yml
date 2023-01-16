@@ -8,12 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      # - uses: subosito/flutter-action@v2
-      #   with:
-      #     flutter-version: '2.10.5'
-      #     channel: 'stable'
-      #     cache: true
-      #     architecture: x64
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '2.10.5'
+          channel: 'stable'
+          cache: true
+          architecture: x64
       - name: Get current date
         id: date
         run: echo "MY_DATE=$(date "+%y.%m.%d+%H%M%S")" >> $GITHUB_ENV
@@ -23,13 +23,9 @@ jobs:
         run: echo $VERSION
       - run: ls
       - run: | 
-          sed -i 's/version:.*/version: 1.2.3+1/g' pubspec.yaml
-      # - run: | 
-      #   sed -i '' 's/version:.*/version: '"$VERSION"'/g' pubspec.yaml 
-      # - name: Set current date as env variable
-      #   run: echo "NOW=$(date "+%y.%m.%d+%H%M%S")" >> $GITHUB_ENV
-      # - run: flutter pub get
-      # - run: flutter format --set-exit-if-changed .
+          sed -i 's/version:.*/version: '"$VERSION"'/g' pubspec.yaml
+      - run: flutter pub get
+      - run: flutter format --set-exit-if-changed .
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Change
