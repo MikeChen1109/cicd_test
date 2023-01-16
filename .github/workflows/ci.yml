@@ -14,9 +14,10 @@ jobs:
           channel: 'stable'
           cache: true
           architecture: x64
-      - run: temp=$(date "+%y.%m.%d+%H%M%S") 
+      - name: Set current date as env variable
+        run: echo "NOW=$(date "+%y.%m.%d+%H%M%S")" >> $GITHUB_ENV
       - run: | 
-        sed -i '' 's/version:.*/version: '"$temp"'/g' pubspec.yaml 
+        sed -i '' 's/version:.*/version: '"$NOW"'/g' pubspec.yaml 
       - run: flutter pub get
       - run: flutter format --set-exit-if-changed .
       - uses: stefanzweifel/git-auto-commit-action@v4
