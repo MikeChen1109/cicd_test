@@ -8,24 +8,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '2.10.5'
-          channel: 'stable'
-          cache: true
-          architecture: x64
+      # - uses: subosito/flutter-action@v2
+      #   with:
+      #     flutter-version: '2.10.5'
+      #     channel: 'stable'
+      #     cache: true
+      #     architecture: x64
       - name: Get current date
         id: date
         run: echo "MY_DATE=$(date "+%y.%m.%d+%H%M%S")" >> $GITHUB_ENV
       - name: Test with environment variables
         env:
           VERSION: ${{ env.MY_DATE }}
-        run: echo $VERSION
-      - run: ls
-      - run: | 
+        run: | 
           sed -i 's/version:.*/version: '"$VERSION"'/g' pubspec.yaml
-      - run: flutter pub get
-      - run: flutter format --set-exit-if-changed .
+      # - run: ls
+      # - run: flutter pub get
+      # - run: flutter format --set-exit-if-changed .
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Change
