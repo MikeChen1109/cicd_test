@@ -14,12 +14,20 @@ jobs:
           channel: 'stable'
           cache: true
           architecture: x64
-      - name: Set current date as env variable
-        run: echo "NOW=$(date "+%y.%m.%d+%H%M%S")" >> $GITHUB_ENV
-      - run: | 
-        sed -i '' 's/version:.*/version: '"$NOW"'/g' pubspec.yaml 
-      - run: flutter pub get
-      - run: flutter format --set-exit-if-changed .
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Automated Change
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Test with environment variables
+        run: echo $TAG_NAME - $RELEASE_NAME
+        env:
+          TAG_NAME: nightly-tag-${{ steps.date.outputs.date }}
+          RELEASE_NAME: nightly-release-${{ steps.date.outputs.date }}
+      # - name: Set current date as env variable
+      #   run: echo "NOW=$(date "+%y.%m.%d+%H%M%S")" >> $GITHUB_ENV
+      # - run: | 
+      #   sed -i '' 's/version:.*/version: '"$NOW"'/g' pubspec.yaml 
+      # - run: flutter pub get
+      # - run: flutter format --set-exit-if-changed .
+      # - uses: stefanzweifel/git-auto-commit-action@v4
+      #   with:
+      #     commit_message: Automated Change
