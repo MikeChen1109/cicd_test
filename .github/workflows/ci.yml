@@ -18,10 +18,10 @@ jobs:
         id: date
         run: echo "MY_DATE=$(date "+%y.%m.%d+%H%M%S")" >> $GITHUB_ENV
       - name: Test with environment variables
-      - run: sed -i '' 's/version:.*/version: '"$VERSION"'/g' pubspec.yaml 
-        run: echo $VERSION
         env:
           VERSION: ${{ env.MY_DATE }}
+      - run: | 
+        sed -i '' 's/version:.*/version: '"$VERSION"'/g' pubspec.yaml 
       # - name: Set current date as env variable
       #   run: echo "NOW=$(date "+%y.%m.%d+%H%M%S")" >> $GITHUB_ENV
       # - run: flutter pub get
