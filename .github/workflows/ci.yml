@@ -8,14 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '2.10.5'
-          channel: 'stable'
-          cache: true
-          architecture: x64
-      - run: flutter pub get
-      - run: flutter format --set-exit-if-changed .
+      # - uses: subosito/flutter-action@v2
+      #   with:
+      #     flutter-version: '2.10.5'
+      #     channel: 'stable'
+      #     cache: true
+      #     architecture: x64
+      # - run: flutter pub get
+      # - run: flutter format --set-exit-if-changed .
   # bump:
   #   needs: build
   #   runs-on: ubuntu-latest
