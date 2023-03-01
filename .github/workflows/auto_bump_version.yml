@@ -35,8 +35,7 @@ jobs:
           git add pubspec.yaml
           git commit -m 'Automated Change Version Number' 
           git fetch
-          git checkout -b $PUSH_BRANCH --track origin/${PUSH_BRANCH}
-          git rebase $TMP_BRANCH $PUSH_BRANCH
+          git pull
           git push
       # - uses: EndBug/add-and-commit@v9
       #   with:
