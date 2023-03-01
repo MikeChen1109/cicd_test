@@ -9,9 +9,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+      # - uses: actions/checkout@v3
+      #   with:
+      #     fetch-depth: 0
       # - run: git checkout HEAD^
       # - run: git pull
       - name: Setup timezone
@@ -26,6 +26,8 @@ jobs:
           sed -i '7 s/\+[^,]*$/'+"$VERSION"'/g' pubspec.yaml
       - uses: EndBug/add-and-commit@v9
         with:
+          default_author: github_actions
+          push: origin HEAD:${{ github.head_ref }}
           message: Automated Change Version Number
           # push: origin HEAD:master
       # - uses: stefanzweifel/git-auto-commit-action@v4
