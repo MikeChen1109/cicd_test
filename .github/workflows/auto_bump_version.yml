@@ -11,7 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: master
+          fetch-depth: 0
+          ref: develop
       # - run: git checkout HEAD^
       # - run: git pull
       - name: Setup timezone
@@ -27,4 +28,4 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Change Version Number
-          branch: master
+          branch: develop
