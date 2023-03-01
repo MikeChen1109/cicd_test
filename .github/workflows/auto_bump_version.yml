@@ -16,6 +16,7 @@ jobs:
           repository: ${{github.event.pull_request.head.repo.full_name}}
       # - run: git checkout HEAD^
       # - run: git pull
+      - run: git checkout HEAD^
       - name: Setup timezone
         run: sudo timedatectl set-timezone Asia/Taipei
       - name: Get current date
