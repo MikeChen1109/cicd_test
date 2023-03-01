@@ -1,8 +1,7 @@
 name: Auto bump version
 
 on: 
-  check_run:
-    types: [completed]
+  pull_request:
 
 jobs:
   build:
