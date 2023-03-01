@@ -12,11 +12,8 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          ref: ${{github.event.pull_request.head.ref}}
-          repository: ${{github.event.pull_request.head.repo.full_name}}
       # - run: git checkout HEAD^
       # - run: git pull
-      - run: git checkout HEAD^
       - name: Setup timezone
         run: sudo timedatectl set-timezone Asia/Taipei
       - name: Get current date
@@ -27,6 +24,10 @@ jobs:
           VERSION: ${{ env.MY_DATE }}
         run: | 
           sed -i '7 s/\+[^,]*$/'+"$VERSION"'/g' pubspec.yaml
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: EndBug/add-and-commit@v9
         with:
-          commit_message: Automated Change Version Number
+          message: Automated Change Version Number
+          push: origin HEAD:master
+      # - uses: stefanzweifel/git-auto-commit-action@v4
+      #   with:
+      #     commit_message: Automated Change Version Number
