@@ -29,14 +29,15 @@ jobs:
           PUSH_BRANCH: develop
           TMP_BRANCH: ${{ github.repository }}${{ github.run_id}}
         run: |
-          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
-          git config --local user.name "$GITHUB_ACTOR"
-          git checkout -b $TMP_BRANCH
-          git add pubspec.yaml
-          git commit -m 'Automated Change Version Number' 
-          git fetch
-          git pull
-          git push
+          git branch
+          # git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          # git config --local user.name "$GITHUB_ACTOR"
+          # git checkout -b $TMP_BRANCH
+          # git add pubspec.yaml
+          # git commit -m 'Automated Change Version Number' 
+          # git fetch
+          # git pull
+          # git push
       # - uses: EndBug/add-and-commit@v9
       #   with:
       #     default_author: github_actions
