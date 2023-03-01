@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: master
+          ref: develop
           fetch-depth: 0
       # - run: git checkout HEAD^
       # - run: git pull
