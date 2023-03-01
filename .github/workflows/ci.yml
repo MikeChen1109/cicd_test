@@ -27,7 +27,7 @@ jobs:
         env:
           VERSION: ${{ env.MY_DATE }}
         run: | 
-          sed -i '7 s/\+[^,]*$/'"$VERSION"'/g' pubspec.yaml 
+          sed -i '7 s/\+[^,]*$/'+"$VERSION"'/g' pubspec.yaml 
         # run: | 
         #   sed -i 's/version:.*/version: '"$VERSION"'/g' pubspec.yaml
       - uses: stefanzweifel/git-auto-commit-action@v4
