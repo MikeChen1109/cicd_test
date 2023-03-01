@@ -1,8 +1,8 @@
 name: Auto bump version
 
 on: 
-  check_run:
-    types: [completed]
+  label:
+    types: [created]
 
 jobs:
   build:
@@ -11,14 +11,14 @@ jobs:
       - uses: actions/checkout@v3
       - name: Setup timezone
         run: sudo timedatectl set-timezone Asia/Taipei
-      - name: Get current date
+      - name: Get current date d
         id: date
-        run: echo "MY_DATE=$(date "+%y.%m.%d+%H%M%S")" >> $GITHUB_ENV
+        run: echo "MY_DATE=$(date "+%y%m%d%H%M%S")" >> $GITHUB_ENV
       - name: Environment variable
         env:
           VERSION: ${{ env.MY_DATE }}
         run: | 
-          sed -i 's/version:.*/version: '"$VERSION"'/g' pubspec.yaml
+          sed -i '7 s/\+[^,]*$/'+"$VERSION"'/g' pubspec.yaml
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Automated Change
+          commit_message: Automated Change Version Number

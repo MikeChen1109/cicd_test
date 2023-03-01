@@ -1,7 +1,14 @@
 name: Build APK & iOS (Dev)
 
-on: 
-  workflow_dispatch:
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+# on: 
+  # workflow_dispatch:
+  # push:
+  #   tag:
+  #     - 'v*'
 
 jobs:
   build_ipa:
