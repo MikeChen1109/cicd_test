@@ -13,7 +13,7 @@ jobs:
         with:
           fetch-depth: 0
       - run: git checkout HEAD^
-      - run: git pull
+      # - run: git pull
       - name: Setup timezone
         run: sudo timedatectl set-timezone Asia/Taipei
       - name: Get current date
