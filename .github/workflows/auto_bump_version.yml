@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.ref }}
+          ref: ${{ steps.latest_sha.outputs.latest_sha }}
       # - run: git checkout HEAD^
       # - run: git pull
       - name: Setup timezone
