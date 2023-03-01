@@ -14,11 +14,6 @@ jobs:
           channel: 'stable'
           cache: true
           architecture: x64
-      - run: | 
-        temp=$(date "+%y.%m.%d+%H%M%S") 
-        sed -i '' 's/version:.*/version: '"$temp"'/g' pubspec.yaml 
+      - run: ls
       - run: flutter pub get
       - run: flutter format --set-exit-if-changed .
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Automated Change
