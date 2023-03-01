@@ -15,7 +15,7 @@ jobs:
           fetch-depth: 0
       - name: Setup timezone
         run: sudo timedatectl set-timezone Asia/Taipei
-      - name: Get current date d
+      - name: Get current date
         id: date
         run: echo "MY_DATE=$(date "+%y%m%d%H%M%S")" >> $GITHUB_ENV
       - name: Environment variable
