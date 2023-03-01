@@ -8,28 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      # - uses: subosito/flutter-action@v2
-      #   with:
-      #     flutter-version: '2.10.5'
-      #     channel: 'stable'
-      #     cache: true
-      #     architecture: x64
-      # - run: ls
-      # - run: flutter pub get
-      # - run: flutter format --set-exit-if-changed .
-      - name: Setup timezone
-        run: sudo timedatectl set-timezone Asia/Taipei
-      - name: Get current date d
-        id: date
-        run: echo "MY_DATE=$(date "+%y%m%d%H%M%S")" >> $GITHUB_ENV
-        # run: echo "MY_DATE=$(date "+%y.%m.%d+%H%M%S")" >> $GITHUB_ENV
-      - name: Environment variable
-        env:
-          VERSION: ${{ env.MY_DATE }}
-        run: | 
-          sed -i '7 s/\+[^,]*$/'+"$VERSION"'/g' pubspec.yaml 
-        # run: | 
-        #   sed -i 's/version:.*/version: '"$VERSION"'/g' pubspec.yaml
-      - uses: stefanzweifel/git-auto-commit-action@v4
+      - uses: subosito/flutter-action@v2
         with:
-          commit_message: Automated Change Version Number
+          flutter-version: '2.10.5'
+          channel: 'stable'
+          cache: true
+          architecture: x64
+      - run: ls
+      - run: flutter pub get
+      - run: flutter format --set-exit-if-changed .
