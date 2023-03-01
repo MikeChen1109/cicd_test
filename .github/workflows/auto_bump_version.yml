@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: master
+          ref: develop
           fetch-depth: 0
       - name: Setup timezone
         run: sudo timedatectl set-timezone Asia/Taipei
