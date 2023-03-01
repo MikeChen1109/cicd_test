@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup timezone
         run: sudo timedatectl set-timezone Asia/Taipei
-      - name: Get current date
+      - name: Get current date123
         id: date
         run: echo "MY_DATE=$(date "+%y%m%d%H%M%S")" >> $GITHUB_ENV
       - name: Environment variable
