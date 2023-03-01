@@ -52,4 +52,8 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
-          branch: bump-version-number
+          commit-message: 版號自動更新
+          title: Automated Bump Version Number
+          body: ''
+          reviewers: MikeChen1109
+          
