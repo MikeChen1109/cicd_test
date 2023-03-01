@@ -16,21 +16,21 @@ jobs:
           architecture: x64
       - run: flutter pub get
       - run: flutter format --set-exit-if-changed .
-  bump:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup timezone
-        run: sudo timedatectl set-timezone Asia/Taipei
-      - name: Get current date123
-        id: date
-        run: echo "MY_DATE=$(date "+%y%m%d%H%M%S")" >> $GITHUB_ENV
-      - name: Environment variable
-        env:
-          VERSION: ${{ env.MY_DATE }}
-        run: | 
-          sed -i '7 s/\+[^,]*$/'+"$VERSION"'/g' pubspec.yaml
-      - uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Automated Change Version Number
+  # bump:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Setup timezone
+  #       run: sudo timedatectl set-timezone Asia/Taipei
+  #     - name: Get current date123
+  #       id: date
+  #       run: echo "MY_DATE=$(date "+%y%m%d%H%M%S")" >> $GITHUB_ENV
+  #     - name: Environment variable
+  #       env:
+  #         VERSION: ${{ env.MY_DATE }}
+  #       run: | 
+  #         sed -i '7 s/\+[^,]*$/'+"$VERSION"'/g' pubspec.yaml
+  #     - uses: stefanzweifel/git-auto-commit-action@v4
+  #       with:
+  #         commit_message: Automated Change Version Number
