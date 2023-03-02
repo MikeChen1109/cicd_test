@@ -4,10 +4,40 @@ on:
   pull_request:
 
 jobs:
+  bump_version_code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: develop
+          fetch-depth: 0
+      # 改系統時區
+      - name: Setup timezone
+        run: sudo timedatectl set-timezone Asia/Taipei
+      - name: Get current date
+        id: date
+      # 取得系統日期 月日年時分
+        run: echo "MY_DATE=$(date "+%m%d%y%H%M")" >> $GITHUB_ENV
+      # 保存日期至 Environment variable 做使用
+      - name: Environment variable
+        env:
+          NUMBER: ${{ env.MY_DATE }}
+      # 暫時解法.. 修改第7行'+'以後的小版號
+        run: | 
+          sed -i '7 s/\+[^,]*$/'+"$NUMBER"'/g' pubspec.yaml
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: 版號自動更新
+          title: Automated Bump Version Number
+          body: ''
+          reviewers: MikeChen1109
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - run: | 
+        sed -e '' pubspec.yaml 
       # - uses: subosito/flutter-action@v2
       #   with:
       #     flutter-version: '2.10.5'
