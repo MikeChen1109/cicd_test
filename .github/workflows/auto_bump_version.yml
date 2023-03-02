@@ -6,54 +6,67 @@ on:
       - 'v*'
 
 jobs:
-  build:
+  bump_version_code:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           ref: develop
           fetch-depth: 0
-      # - run: git switch -
-      # - run: git pull
-      - run: git branch
+      # 改系統時區
       - name: Setup timezone
         run: sudo timedatectl set-timezone Asia/Taipei
       - name: Get current date
         id: date
-        run: echo "MY_DATE=$(date "+%y%m%d%H%M%S")" >> $GITHUB_ENV
+      # 取得系統日期 月日年時分
+        run: echo "MY_DATE=$(date "+%m%d%y%H%M")" >> $GITHUB_ENV
+      # 保存日期至 Environment variable 做使用
       - name: Environment variable
         env:
-          VERSION: ${{ env.MY_DATE }}
+          NUMBER: ${{ env.MY_DATE }}
+      # 暫時解法.. 修改第7行'+'以後的小版號
         run: | 
-          sed -i '7 s/\+[^,]*$/'+"$VERSION"'/g' pubspec.yaml
-      # - name: Git commit, rebase onto master
-      #   env:
-      #     PUSH_BRANCH: develop
-      #     TMP_BRANCH: ${{ github.repository }}${{ github.run_id}}
-      #   run: |
-      #     git branch
-      #     # git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      #     # git config --local user.name "$GITHUB_ACTOR"
-      #     # git checkout -b $TMP_BRANCH
-      #     # git add pubspec.yaml
-      #     # git commit -m 'Automated Change Version Number' 
-      #     # git fetch
-      #     # git pull
-      #     # git push
-      # - uses: EndBug/add-and-commit@v9
-      #   with:
-      #     default_author: github_actions
-      #     push: origin HEAD:${{ github.head_ref }}
-      #     message: Automated Change Version Number
-          # push: origin HEAD:master
+          sed -i '7 s/\+[^,]*$/'+"$NUMBER"'/g' pubspec.yaml
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Automated Change Version Number
+  build:
+    needs: bump_version_code
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: develop
+          fetch-depth: 0
+      - run: sed -e '' pubspec.yaml
+  # build:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         ref: develop
+  #         fetch-depth: 0
+  #     # - run: git switch -
+  #     # - run: git pull
+  #     - run: git branch
+  #     - name: Setup timezone
+  #       run: sudo timedatectl set-timezone Asia/Taipei
+  #     - name: Get current date
+  #       id: date
+  #       run: echo "MY_DATE=$(date "+%y%m%d%H%M%S")" >> $GITHUB_ENV
+  #     - name: Environment variable
+  #       env:
+  #         VERSION: ${{ env.MY_DATE }}
+  #       run: | 
+  #         sed -i '7 s/\+[^,]*$/'+"$VERSION"'/g' pubspec.yaml
       # - uses: stefanzweifel/git-auto-commit-action@v4
       #   with:
       #     commit_message: Automated Change Version Number
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
-        with:
-          commit-message: 版號自動更新
-          title: Automated Bump Version Number
-          body: ''
-          reviewers: MikeChen1109
+      # - name: Create Pull Request
+      #   uses: peter-evans/create-pull-request@v4
+      #   with:
+      #     commit-message: 版號自動更新
+      #     title: Automated Bump Version Number
+      #     body: ''
+      #     reviewers: MikeChen1109
           
