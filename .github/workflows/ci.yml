@@ -33,6 +33,7 @@ jobs:
           body: ''
           reviewers: MikeChen1109
   build:
+    needs: bump_version_code
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
