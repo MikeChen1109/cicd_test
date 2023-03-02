@@ -6,9 +6,6 @@ on:
     tags:
       - 'v*'
 
-env:
-  NUMBER: ${{ env.MY_DATE }}
-
 jobs:
   bump_version_code:
     runs-on: ubuntu-latest
@@ -25,19 +22,19 @@ jobs:
       # 取得系統日期 月日年時分
         run: echo "MY_DATE=$(date "+%m%d%y%H%M")" >> $GITHUB_ENV
       # 保存日期至 Environment variable 做使用
-      # - name: Environment variable
-      #   env:
-      #     NUMBER: ${{ env.MY_DATE }}
+      - name: Environment variable
+        env:
+          NUMBER: ${{ env.MY_DATE }}
       # 暫時解法.. 修改第7行'+'以後的小版號
         run: | 
           sed -i '7 s/\+[^,]*$/'+"$NUMBER"'/g' pubspec.yaml
-      # - uses: stefanzweifel/git-auto-commit-action@v4
-      #   with:
-      #     commit_message: Automated Change Version Number
-  build:
-    needs: bump_version_code
-    runs-on: ubuntu-latest
-    steps:
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Automated Change Version Number
+  # build:
+  #   needs: bump_version_code
+  #   runs-on: ubuntu-latest
+  #   steps:
       - uses: actions/checkout@v3
         with:
           ref: develop
