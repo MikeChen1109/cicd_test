@@ -36,8 +36,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: | 
-        sed -e '' pubspec.yaml 
+      - run: sed -e '' pubspec.yaml 
       # - uses: subosito/flutter-action@v2
       #   with:
       #     flutter-version: '2.10.5'
