@@ -97,6 +97,7 @@ jobs:
           PROPERTIES_PATH: "./android/key.properties"
           ALIAS_PASSWORD: ${{ secrets.ALIAS_PASSWORD }}
           JAVA_VERSION: "11"
+        run: echo
       # - uses: actions/setup-java@v3
       #   with:
       #     distribution: "zulu"
