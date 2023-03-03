@@ -98,30 +98,30 @@ jobs:
           ALIAS_PASSWORD: ${{ secrets.ALIAS_PASSWORD }}
           JAVA_VERSION: "11"
         run: echo
-      # - uses: actions/setup-java@v3
-      #   with:
-      #     distribution: "zulu"
-      #     java-version: ${{ env.JAVA_VERSION }} 
-      # - name: Create key file
-      #   run: |
-      #     echo keyPassword=\${{ secrets.KEY_PASSWORD }} > ${{env.PROPERTIES_PATH}}
-      #     echo storePassword=\${{ secrets.KEY_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
-      #     echo keyAlias=\${{ secrets.ALIAS_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
-      #     echo "${{ secrets.KEY_JKS }}" | base64 --decode > android/app/key/KHKeyStore.jks
-      # - run: flutter build appbundle --release
-      # - uses: actions/upload-artifact@v3
-      #   with:
-      #     name: release-aab
-      #     path: build/app/outputs/bundle/release/app-release.aab
-      # - run: flutter build apk --release
-      # - uses: actions/upload-artifact@v3
-      #   with:
-      #     name: release-apk
-      #     path: build/app/outputs/apk/release/app-release.apk
-      # - name: Create Pull Request
-      #   uses: peter-evans/create-pull-request@v4
-      #   with:
-      #     commit-message: 版號自動更新
-      #     title: Automated Bump Version Number
-      #     body: ''
-      #     reviewers: MikeChen1109
+      - uses: actions/setup-java@v3
+        with:
+          distribution: "zulu"
+          java-version: ${{ env.JAVA_VERSION }} 
+      - name: Create key file
+        run: |
+          echo keyPassword=\${{ secrets.KEY_PASSWORD }} > ${{env.PROPERTIES_PATH}}
+          echo storePassword=\${{ secrets.KEY_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
+          echo keyAlias=\${{ secrets.ALIAS_PASSWORD }} >> ${{env.PROPERTIES_PATH}}
+          echo "${{ secrets.KEY_JKS }}" | base64 --decode > android/app/key/KHKeyStore.jks
+      - run: flutter build appbundle --release
+      - uses: actions/upload-artifact@v3
+        with:
+          name: release-aab
+          path: build/app/outputs/bundle/release/app-release.aab
+      - run: flutter build apk --release
+      - uses: actions/upload-artifact@v3
+        with:
+          name: release-apk
+          path: build/app/outputs/apk/release/app-release.apk
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          commit-message: 版號自動更新
+          title: Automated Bump Version Number
+          body: ''
+          reviewers: MikeChen1109
