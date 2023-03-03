@@ -97,10 +97,10 @@ jobs:
           PROPERTIES_PATH: "./android/key.properties"
           ALIAS_PASSWORD: ${{ secrets.ALIAS_PASSWORD }}
           JAVA_VERSION: "11"
-      - uses: actions/setup-java@v3
-        with:
-          distribution: "zulu"
-          java-version: ${{ env.JAVA_VERSION }} 
+      # - uses: actions/setup-java@v3
+      #   with:
+      #     distribution: "zulu"
+      #     java-version: ${{ env.JAVA_VERSION }} 
       # - name: Create key file
       #   run: |
       #     echo keyPassword=\${{ secrets.KEY_PASSWORD }} > ${{env.PROPERTIES_PATH}}
